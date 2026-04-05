@@ -1,0 +1,2590 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VeggiePOS Wireframe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Instrument+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f5efdf;
+        --surface: rgba(255, 251, 243, 0.78);
+        --surface-strong: #fffaf1;
+        --surface-deep: #214631;
+        --text: #17271c;
+        --muted: #56685a;
+        --line: rgba(23, 39, 28, 0.12);
+        --olive: #5f7a31;
+        --olive-deep: #3b5721;
+        --tomato: #d76e37;
+        --sand: #e7d9b6;
+        --mint: #d4e7c6;
+        --danger: #bb4b3f;
+        --shadow: 0 24px 80px rgba(55, 57, 33, 0.15);
+        --radius-xl: 34px;
+        --radius-lg: 24px;
+        --radius-md: 18px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Instrument Sans", sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at top left, rgba(255, 194, 122, 0.26), transparent 28%),
+          radial-gradient(circle at 80% 12%, rgba(95, 122, 49, 0.2), transparent 22%),
+          linear-gradient(180deg, #f7f2e8 0%, #efe6d1 100%);
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.2;
+        background-image:
+          linear-gradient(rgba(23, 39, 28, 0.04) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(23, 39, 28, 0.04) 1px, transparent 1px);
+        background-size: 24px 24px;
+        mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent 92%);
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.08;
+        background-image:
+          radial-gradient(circle at 1px 1px, rgba(23, 39, 28, 0.48) 1px, transparent 0);
+        background-size: 12px 12px;
+        mix-blend-mode: multiply;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .page {
+        width: min(1440px, calc(100% - 48px));
+        margin: 0 auto;
+        padding: 28px 0 64px;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 24px;
+        align-items: stretch;
+        margin-bottom: 28px;
+      }
+
+      .hero-card,
+      .nav-card,
+      .screen,
+      .legend-card {
+        background: var(--surface);
+        backdrop-filter: blur(14px);
+        border: 1px solid rgba(255, 255, 255, 0.55);
+        box-shadow: var(--shadow);
+      }
+
+      .hero-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 40px;
+        padding: 36px;
+        animation: rise-in 0.8s ease both;
+      }
+
+      .hero-card::before {
+        content: "";
+        position: absolute;
+        inset: auto 36px 26px auto;
+        width: 148px;
+        height: 10px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, rgba(215, 110, 55, 0.12), rgba(95, 122, 49, 0.36));
+      }
+
+      .hero-card::after {
+        content: "";
+        position: absolute;
+        right: -90px;
+        top: -72px;
+        width: 260px;
+        height: 260px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(95, 122, 49, 0.18), transparent 64%);
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        border-radius: 999px;
+        background: rgba(33, 70, 49, 0.08);
+        color: var(--olive-deep);
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .hero h1,
+      .section-title h2 {
+        margin: 16px 0 12px;
+        font-family: "Fraunces", serif;
+        font-weight: 700;
+        line-height: 0.96;
+      }
+
+      .hero h1 {
+        font-size: clamp(3rem, 7vw, 5.2rem);
+        max-width: 10ch;
+      }
+
+      .hero p {
+        max-width: 60ch;
+        margin: 0;
+        color: var(--muted);
+        font-size: 1.02rem;
+        line-height: 1.7;
+      }
+
+      .hero-tags,
+      .screen-links,
+      .legend-list,
+      .chip-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .hero-tags {
+        margin-top: 26px;
+      }
+
+      .tag,
+      .chip,
+      .mini-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.56);
+        font-size: 14px;
+      }
+
+      .tag strong,
+      .screen-link span {
+        font-weight: 700;
+      }
+
+      .nav-card {
+        border-radius: 34px;
+        padding: 28px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 18px;
+        animation: rise-in 0.9s ease both;
+      }
+
+      .nav-card h3,
+      .legend-card h3 {
+        margin: 0;
+        font-family: "Fraunces", serif;
+        font-size: 1.7rem;
+      }
+
+      .nav-card p,
+      .legend-card p,
+      .screen-copy p,
+      .metric p,
+      .table-note,
+      .receipt-lines span,
+      .payment-row span {
+        color: var(--muted);
+      }
+
+      .screen-links {
+        margin-top: 8px;
+      }
+
+      .screen-link {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        width: 100%;
+        padding: 16px 18px;
+        border-radius: 20px;
+        background: var(--surface-strong);
+        border: 1px solid var(--line);
+        transition: transform 0.25s ease, background 0.25s ease;
+      }
+
+      .screen-link:hover {
+        transform: translateX(6px);
+        background: #fffef7;
+      }
+
+      .legend-card {
+        border-radius: 34px;
+        padding: 28px;
+        margin-bottom: 28px;
+        animation: rise-in 1s ease both;
+      }
+
+      .legend-list {
+        margin-top: 18px;
+      }
+
+      .legend-item {
+        flex: 1 1 220px;
+        min-width: 220px;
+        padding: 16px 18px;
+        border-radius: 18px;
+        border: 1px dashed rgba(33, 70, 49, 0.25);
+        background: rgba(255, 255, 255, 0.52);
+      }
+
+      .legend-item strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--olive-deep);
+      }
+
+      .screens {
+        display: grid;
+        gap: 28px;
+      }
+
+      .screen {
+        border-radius: 36px;
+        overflow: hidden;
+        position: relative;
+        animation: rise-in 0.9s ease both;
+      }
+
+      .screen::before {
+        content: "";
+        position: absolute;
+        inset: 0 0 auto 0;
+        height: 8px;
+        background: linear-gradient(90deg, rgba(95, 122, 49, 0.55), rgba(215, 110, 55, 0.42), rgba(231, 217, 182, 0.2));
+      }
+
+      .screen-header {
+        display: flex;
+        justify-content: space-between;
+        gap: 24px;
+        padding: 26px 28px 0;
+      }
+
+      .section-title small,
+      .screen-id {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(95, 122, 49, 0.1);
+        color: var(--olive-deep);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .section-title h2 {
+        font-size: clamp(2rem, 4vw, 3.4rem);
+      }
+
+      .section-title p {
+        max-width: 64ch;
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .screen-copy {
+        width: min(320px, 100%);
+        padding: 18px;
+        border-radius: 22px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.6);
+      }
+
+      .screen-copy h4 {
+        margin: 0 0 10px;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--olive-deep);
+      }
+
+      .screen-body {
+        padding: 28px;
+      }
+
+      .hero-metrics,
+      .context-bar,
+      .crumbs,
+      .toolbar-cluster,
+      .support-row,
+      .micro-stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .hero-metrics {
+        margin-top: 24px;
+      }
+
+      .hero-metric,
+      .context-card {
+        min-width: 150px;
+        padding: 14px 16px;
+        border-radius: 18px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.56);
+      }
+
+      .hero-metric span,
+      .context-card span,
+      .micro-stat span,
+      .meta-kicker {
+        display: block;
+        margin-bottom: 6px;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .hero-metric strong,
+      .context-card strong,
+      .micro-stat strong {
+        font-family: "Fraunces", serif;
+        font-size: 1.35rem;
+      }
+
+      .login-layout {
+        display: grid;
+        grid-template-columns: 0.95fr 1.05fr;
+        gap: 24px;
+      }
+
+      .panel,
+      .device,
+      .module,
+      .table-card,
+      .cart-card,
+      .receipt-card,
+      .sidebar,
+      .topbar,
+      .card,
+      .field,
+      .stat,
+      .product-card {
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--line);
+        background: var(--surface-strong);
+      }
+
+      .panel {
+        padding: 28px;
+      }
+
+      .produce-card {
+        position: relative;
+        overflow: hidden;
+        min-height: 420px;
+        padding: 28px;
+        background:
+          radial-gradient(circle at 20% 18%, rgba(212, 231, 198, 0.92), transparent 26%),
+          radial-gradient(circle at 78% 28%, rgba(231, 217, 182, 0.9), transparent 22%),
+          linear-gradient(135deg, #244e38 0%, #132b1f 100%);
+        color: #eff8eb;
+      }
+
+      .produce-card::before {
+        content: "";
+        position: absolute;
+        inset: 22px 22px auto auto;
+        width: 132px;
+        height: 132px;
+        border-radius: 32px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        transform: rotate(14deg);
+      }
+
+      .produce-card h3 {
+        margin: 18px 0 10px;
+        font-family: "Fraunces", serif;
+        font-size: 2.6rem;
+        line-height: 1;
+      }
+
+      .produce-card p {
+        max-width: 26ch;
+        color: rgba(239, 248, 235, 0.78);
+        line-height: 1.7;
+      }
+
+      .produce-cluster {
+        position: absolute;
+        right: 24px;
+        bottom: 20px;
+        width: 220px;
+        height: 220px;
+        animation: floaty 7s ease-in-out infinite;
+      }
+
+      .leaf,
+      .tomato-shape,
+      .carrot {
+        position: absolute;
+        border-radius: 999px;
+        filter: drop-shadow(0 12px 30px rgba(0, 0, 0, 0.14));
+      }
+
+      .leaf {
+        background: linear-gradient(180deg, #9ec24d 0%, #648833 100%);
+      }
+
+      .leaf.one {
+        width: 120px;
+        height: 72px;
+        right: 80px;
+        top: 48px;
+        transform: rotate(-22deg);
+      }
+
+      .leaf.two {
+        width: 128px;
+        height: 76px;
+        right: 20px;
+        top: 92px;
+        transform: rotate(28deg);
+      }
+
+      .tomato-shape {
+        width: 86px;
+        height: 86px;
+        left: 18px;
+        bottom: 42px;
+        background: radial-gradient(circle at 30% 30%, #ffbb8f 0%, #d76e37 46%, #ae5228 100%);
+      }
+
+      .carrot {
+        width: 54px;
+        height: 136px;
+        right: 34px;
+        bottom: 4px;
+        background: linear-gradient(180deg, #ffb259 0%, #cf6928 100%);
+        transform: rotate(24deg);
+      }
+
+      .form-panel {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 32px;
+      }
+
+      .support-row {
+        margin-top: 18px;
+      }
+
+      .micro-stat {
+        flex: 1 1 140px;
+        padding: 12px 14px;
+        border-radius: 16px;
+        border: 1px solid var(--line);
+        background: rgba(245, 239, 223, 0.74);
+      }
+
+      .brand-row {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 20px;
+      }
+
+      .brand-mark {
+        width: 56px;
+        height: 56px;
+        display: grid;
+        place-items: center;
+        border-radius: 18px;
+        background: linear-gradient(135deg, #d4e7c6 0%, #f0e2c2 100%);
+        color: var(--olive-deep);
+        font-size: 24px;
+      }
+
+      .brand-row h3,
+      .module h4,
+      .card h4,
+      .table-card h4,
+      .cart-card h4,
+      .receipt-card h4,
+      .panel h4 {
+        margin: 0;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .form-panel h2 {
+        margin: 8px 0 12px;
+        font-family: "Fraunces", serif;
+        font-size: 2.7rem;
+        line-height: 1;
+      }
+
+      .fields {
+        display: grid;
+        gap: 14px;
+        margin-top: 24px;
+      }
+
+      .field {
+        padding: 14px 16px;
+      }
+
+      .field label {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--olive-deep);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .field .line {
+        height: 14px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, rgba(33, 70, 49, 0.18), rgba(33, 70, 49, 0.08));
+      }
+
+      .button-row {
+        display: flex;
+        gap: 12px;
+        margin-top: 20px;
+      }
+
+      .button,
+      .button-soft,
+      .button-alert {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        padding: 14px 18px;
+        border-radius: 16px;
+        font-weight: 700;
+      }
+
+      .button {
+        background: var(--surface-deep);
+        color: #f4f8f1;
+        box-shadow: 0 14px 30px rgba(33, 70, 49, 0.18);
+      }
+
+      .button-soft {
+        background: rgba(95, 122, 49, 0.12);
+        color: var(--olive-deep);
+      }
+
+      .button-alert {
+        background: rgba(187, 75, 63, 0.1);
+        color: var(--danger);
+      }
+
+      .admin-layout,
+      .cashier-layout {
+        display: grid;
+        grid-template-columns: 280px minmax(0, 1fr);
+        gap: 20px;
+      }
+
+      .sidebar {
+        padding: 22px;
+        background:
+          linear-gradient(180deg, rgba(33, 70, 49, 0.94) 0%, rgba(20, 44, 31, 0.98) 100%);
+        color: #eef5ea;
+      }
+
+      .sidebar h3 {
+        margin: 12px 0 2px;
+        font-family: "Fraunces", serif;
+        font-size: 1.8rem;
+      }
+
+      .sidebar small,
+      .sidebar p {
+        color: rgba(238, 245, 234, 0.72);
+      }
+
+      .nav-list {
+        display: grid;
+        gap: 10px;
+        margin: 26px 0;
+      }
+
+      .nav-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px 16px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .nav-item.active {
+        background: rgba(212, 231, 198, 0.14);
+        border-color: rgba(212, 231, 198, 0.24);
+      }
+
+      .content-stack {
+        display: grid;
+        gap: 18px;
+      }
+
+      .context-bar {
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 18px;
+        border-radius: 18px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.52);
+      }
+
+      .crumbs {
+        align-items: center;
+      }
+
+      .crumb {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(95, 122, 49, 0.08);
+        color: var(--olive-deep);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .crumb.muted-crumb {
+        background: rgba(33, 70, 49, 0.04);
+        color: var(--muted);
+      }
+
+      .toolbar-cluster {
+        justify-content: flex-end;
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        padding: 18px 20px;
+      }
+
+      .search-shell,
+      .mini-panel {
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.72);
+      }
+
+      .search-shell {
+        flex: 1;
+        min-height: 52px;
+        padding: 0 16px;
+        display: flex;
+        align-items: center;
+        color: var(--muted);
+      }
+
+      .mini-panel {
+        padding: 14px 16px;
+      }
+
+      .grid-4,
+      .grid-3,
+      .grid-products {
+        display: grid;
+        gap: 18px;
+      }
+
+      .grid-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .grid-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .card,
+      .stat,
+      .product-card,
+      .module,
+      .table-card,
+      .cart-card,
+      .receipt-card {
+        padding: 20px;
+      }
+
+      .stat {
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(250, 245, 235, 0.9) 100%);
+      }
+
+      .metric {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .metric strong {
+        display: block;
+        margin-top: 8px;
+        font-family: "Fraunces", serif;
+        font-size: 2.4rem;
+        line-height: 1;
+      }
+
+      .sparkline {
+        position: relative;
+        height: 48px;
+        margin-top: 16px;
+        border-radius: 16px;
+        background:
+          linear-gradient(180deg, rgba(95, 122, 49, 0.06), rgba(95, 122, 49, 0.02)),
+          repeating-linear-gradient(
+            90deg,
+            transparent 0,
+            transparent 34px,
+            rgba(23, 39, 28, 0.05) 34px,
+            rgba(23, 39, 28, 0.05) 35px
+          );
+        overflow: hidden;
+      }
+
+      .sparkline::after {
+        content: "";
+        position: absolute;
+        inset: 10px 12px 10px 12px;
+        border-radius: 999px;
+        background:
+          linear-gradient(
+            135deg,
+            transparent 0 8%,
+            rgba(95, 122, 49, 0.45) 8% 16%,
+            transparent 16% 26%,
+            rgba(215, 110, 55, 0.42) 26% 36%,
+            transparent 36% 48%,
+            rgba(95, 122, 49, 0.52) 48% 60%,
+            transparent 60% 72%,
+            rgba(231, 217, 182, 0.9) 72% 82%,
+            transparent 82% 100%
+          );
+        opacity: 0.9;
+      }
+
+      .pill {
+        padding: 8px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .pill-good {
+        background: rgba(95, 122, 49, 0.14);
+        color: var(--olive-deep);
+      }
+
+      .pill-warn {
+        background: rgba(215, 110, 55, 0.14);
+        color: #9e4f24;
+      }
+
+      .pill-soft {
+        background: rgba(33, 70, 49, 0.08);
+        color: var(--olive-deep);
+      }
+
+      .split-2,
+      .split-cashier {
+        display: grid;
+        gap: 18px;
+      }
+
+      .split-2 {
+        grid-template-columns: 1.25fr 0.95fr;
+      }
+
+      .split-cashier {
+        grid-template-columns: 1.25fr 0.95fr;
+      }
+
+      .table-head,
+      .table-row {
+        display: grid;
+        grid-template-columns: 1.3fr 0.8fr 0.8fr 0.9fr;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .table-head {
+        padding: 14px 0;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--olive-deep);
+        border-bottom: 1px solid var(--line);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+
+      .table-toolbar,
+      .module-toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin: 14px 0 6px;
+      }
+
+      .segmented {
+        display: inline-flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .segment {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.72);
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--olive-deep);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .segment.active {
+        background: rgba(212, 231, 198, 0.6);
+      }
+
+      .table-row {
+        padding: 16px 0;
+        border-bottom: 1px dashed rgba(23, 39, 28, 0.08);
+      }
+
+      .table-row:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+      }
+
+      .grid-products {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .product-card {
+        display: grid;
+        gap: 14px;
+        transition: transform 0.24s ease, box-shadow 0.24s ease;
+      }
+
+      .product-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 18px 34px rgba(55, 57, 33, 0.11);
+      }
+
+      .product-card .shape {
+        height: 98px;
+        border-radius: 18px;
+        background:
+          radial-gradient(circle at 25% 35%, rgba(212, 231, 198, 0.95), transparent 22%),
+          radial-gradient(circle at 72% 34%, rgba(215, 110, 55, 0.55), transparent 18%),
+          linear-gradient(135deg, rgba(33, 70, 49, 0.16), rgba(231, 217, 182, 0.75));
+      }
+
+      .product-foot,
+      .payment-row,
+      .cart-item,
+      .receipt-line {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .cart-list,
+      .receipt-lines {
+        display: grid;
+        gap: 12px;
+      }
+
+      .cart-item,
+      .receipt-line {
+        padding-bottom: 12px;
+        border-bottom: 1px dashed rgba(23, 39, 28, 0.12);
+      }
+
+      .receipt-ticket {
+        margin-top: 18px;
+        padding: 18px;
+        border-radius: 18px;
+        background: #fcfaf4;
+        border: 1px dashed rgba(23, 39, 28, 0.18);
+      }
+
+      .receipt-ticket h5 {
+        margin: 0 0 14px;
+        font-family: "Fraunces", serif;
+        font-size: 1.3rem;
+      }
+
+      .receipt-line:last-child,
+      .cart-item:last-child {
+        border-bottom: 0;
+      }
+
+      .receipt-total {
+        margin-top: 14px;
+        padding-top: 14px;
+        border-top: 1px solid var(--line);
+      }
+
+      .progress-stack {
+        display: grid;
+        gap: 14px;
+        margin-top: 16px;
+      }
+
+      .progress-item {
+        display: grid;
+        gap: 8px;
+      }
+
+      .progress-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+      }
+
+      .progress-track {
+        height: 12px;
+        border-radius: 999px;
+        overflow: hidden;
+        background: rgba(23, 39, 28, 0.08);
+      }
+
+      .progress-fill {
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, #9ec24d 0%, #5f7a31 100%);
+      }
+
+      .progress-fill.warn {
+        background: linear-gradient(90deg, #ffbe7f 0%, #d76e37 100%);
+      }
+
+      .people-list,
+      .note-list {
+        display: grid;
+        gap: 12px;
+        margin-top: 16px;
+      }
+
+      .people-item,
+      .note-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 14px;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.68);
+        border: 1px solid var(--line);
+      }
+
+      .identity {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .avatar {
+        width: 40px;
+        height: 40px;
+        display: grid;
+        place-items: center;
+        border-radius: 14px;
+        background: linear-gradient(135deg, rgba(212, 231, 198, 0.9), rgba(231, 217, 182, 0.9));
+        color: var(--olive-deep);
+        font-weight: 700;
+      }
+
+      .receipt-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 10px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(215, 110, 55, 0.08);
+        color: #9e4f24;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .soft-divider {
+        height: 1px;
+        margin: 16px 0;
+        background: linear-gradient(90deg, transparent, rgba(23, 39, 28, 0.14), transparent);
+      }
+
+      .note-box {
+        margin-top: 18px;
+        padding: 14px 16px;
+        border-radius: 16px;
+        background: rgba(212, 231, 198, 0.42);
+        color: var(--olive-deep);
+      }
+
+      .footer-note {
+        margin-top: 26px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      @keyframes rise-in {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes floaty {
+        0%,
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-8px) rotate(4deg);
+        }
+      }
+
+      @media (max-width: 1100px) {
+        .hero,
+        .login-layout,
+        .admin-layout,
+        .cashier-layout,
+        .split-2,
+        .split-cashier {
+          grid-template-columns: 1fr;
+        }
+
+        .grid-4,
+        .grid-3,
+        .grid-products {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 760px) {
+        .page {
+          width: min(100% - 24px, 1440px);
+          padding-top: 18px;
+        }
+
+        .hero-card,
+        .nav-card,
+        .legend-card,
+        .screen-body,
+        .screen-header {
+          padding: 20px;
+        }
+
+        .grid-4,
+        .grid-3,
+        .grid-products {
+          grid-template-columns: 1fr;
+        }
+
+        .screen-header,
+        .topbar,
+        .context-bar {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .table-head,
+        .table-row {
+          grid-template-columns: 1.1fr 0.9fr 0.9fr 1fr;
+          font-size: 13px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero">
+        <article class="hero-card">
+          <div class="eyebrow">Wireframe Visual VeggiePOS</div>
+          <h1>Pasar sayur modern, cepat dipakai, enak dilihat.</h1>
+          <p>
+            Prototype ini menerjemahkan kebutuhan VeggiePOS menjadi wireframe
+            visual yang siap dijadikan acuan implementasi. Arah desainnya
+            menggabungkan nuansa organik kios sayur dengan ritme dashboard POS
+            yang rapi, cepat, dan tegas saat dipakai admin maupun kasir.
+          </p>
+          <div class="hero-tags">
+            <div class="tag"><strong>Tone</strong> Organic Editorial</div>
+            <div class="tag"><strong>Prioritas</strong> Kecepatan transaksi</div>
+            <div class="tag"><strong>Karakter</strong> Bumi, segar, terstruktur</div>
+          </div>
+          <div class="hero-metrics">
+            <div class="hero-metric">
+              <span>Area Inti</span>
+              <strong>Admin + Kasir</strong>
+            </div>
+            <div class="hero-metric">
+              <span>Desain Intent</span>
+              <strong>Retail yang hangat</strong>
+            </div>
+            <div class="hero-metric">
+              <span>Output</span>
+              <strong>Siap diimplementasi</strong>
+            </div>
+          </div>
+        </article>
+
+        <aside class="nav-card">
+          <div>
+            <h3>Layar Inti</h3>
+            <p>
+              Tujuh layar ini dipilih sebagai fondasi desain awal sebelum masuk
+              ke implementasi penuh.
+            </p>
+          </div>
+
+          <div class="screen-links">
+            <a class="screen-link" href="#login">
+              <span>01. Login</span>
+              <span>/login</span>
+            </a>
+            <a class="screen-link" href="#admin-dashboard">
+              <span>02. Dashboard Admin</span>
+              <span>/admin/dashboard</span>
+            </a>
+            <a class="screen-link" href="#admin-produk">
+              <span>03. Data Sayuran</span>
+              <span>/admin/produk</span>
+            </a>
+            <a class="screen-link" href="#kasir-transaksi">
+              <span>04. Transaksi Kasir</span>
+              <span>/kasir/transaksi</span>
+            </a>
+            <a class="screen-link" href="#admin-users">
+              <span>05. Data User</span>
+              <span>/admin/users</span>
+            </a>
+            <a class="screen-link" href="#laporan-penjualan">
+              <span>06. Laporan Penjualan</span>
+              <span>/admin/laporan/penjualan</span>
+            </a>
+            <a class="screen-link" href="#laporan-stok">
+              <span>07. Laporan Stok</span>
+              <span>/admin/laporan/stok</span>
+            </a>
+          </div>
+        </aside>
+      </section>
+
+      <section class="legend-card">
+        <h3>Prinsip Wireframe</h3>
+        <p>
+          Walau masih tahap wireframe, komposisi visualnya sudah diarahkan ke
+          pengalaman final: admin terasa tenang dan terstruktur, kasir terasa
+          cepat dan fokus pada aksi transaksi.
+        </p>
+        <div class="legend-list">
+          <div class="legend-item">
+            <strong>Warna</strong>
+            Hijau zaitun, krem pasar, dan aksen tomat untuk memberi identitas
+            sayur segar tanpa terlihat generik.
+          </div>
+          <div class="legend-item">
+            <strong>Tipografi</strong>
+            Fraunces untuk heading agar punya rasa editorial, Instrument Sans
+            untuk panel data supaya tetap bersih dan mudah dibaca.
+          </div>
+          <div class="legend-item">
+            <strong>Layout</strong>
+            Area admin memakai ritme dashboard, sedangkan area kasir punya
+            pembagian kiri-kanan yang mendukung alur scan pilih bayar cetak.
+          </div>
+        </div>
+      </section>
+
+      <section class="screens">
+        <article class="screen" id="login">
+          <header class="screen-header">
+            <div class="section-title">
+              <small>Screen 01</small>
+              <h2>Login yang terasa seperti masuk ke pasar modern.</h2>
+              <p>
+                Layar login tidak dibuat dingin seperti dashboard biasa. Sisi
+                kiri membangun atmosfer brand VeggiePOS, sedangkan sisi kanan
+                memberi form masuk yang langsung jelas dan fokus.
+              </p>
+            </div>
+            <div class="screen-copy">
+              <h4>Fokus</h4>
+              <p>
+                Akses cepat, branding terasa, dan validasi error nantinya mudah
+                ditempatkan tanpa mengganggu form utama.
+              </p>
+            </div>
+          </header>
+          <div class="screen-body">
+            <div class="login-layout">
+              <section class="produce-card">
+                <div class="eyebrow">Sayur Segar • Sistem Cepat</div>
+                <h3>VeggiePOS</h3>
+                <p>
+                  Sistem penjualan sayuran untuk toko yang ingin stok rapi,
+                  kasir cepat, dan laporan tetap jelas dibaca setiap hari.
+                </p>
+                <div class="chip-row">
+                  <div class="mini-tag">Admin & Kasir</div>
+                  <div class="mini-tag">Cetak Struk</div>
+                  <div class="mini-tag">Kelola Stok</div>
+                </div>
+                <div class="support-row">
+                  <div class="micro-stat">
+                    <span>Masuk Harian</span>
+                    <strong>06.00 - 20.00</strong>
+                  </div>
+                  <div class="micro-stat">
+                    <span>Mode Operasi</span>
+                    <strong>POS + Laporan</strong>
+                  </div>
+                </div>
+                <div class="produce-cluster">
+                  <div class="leaf one"></div>
+                  <div class="leaf two"></div>
+                  <div class="tomato-shape"></div>
+                  <div class="carrot"></div>
+                </div>
+              </section>
+
+              <section class="panel form-panel">
+                <div class="brand-row">
+                  <div class="brand-mark">V</div>
+                  <div>
+                    <h3>VeggiePOS</h3>
+                    <div class="muted">Masuk sesuai level pengguna</div>
+                  </div>
+                </div>
+                <h2>Selamat datang kembali.</h2>
+                <p class="muted">
+                  Gunakan username dan password yang sudah diberikan oleh admin.
+                </p>
+                <div class="segmented" style="margin-top: 18px;">
+                  <div class="segment active">Masuk Sebagai Admin</div>
+                  <div class="segment">Masuk Sebagai Kasir</div>
+                </div>
+                <div class="fields">
+                  <div class="field">
+                    <label>Username</label>
+                    <div class="line"></div>
+                  </div>
+                  <div class="field">
+                    <label>Password</label>
+                    <div class="line"></div>
+                  </div>
+                </div>
+                <div class="button-row">
+                  <div class="button">Masuk ke Sistem</div>
+                  <div class="button-soft">Lihat Panduan</div>
+                </div>
+                <div class="note-box">
+                  Placeholder area untuk pesan error, seperti username salah
+                  atau password tidak cocok.
+                </div>
+                <div class="support-row">
+                  <div class="micro-stat">
+                    <span>Keamanan</span>
+                    <strong>Akses sesuai level</strong>
+                  </div>
+                  <div class="micro-stat">
+                    <span>Bantuan</span>
+                    <strong>Panduan login cepat</strong>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </article>
+
+        <article class="screen" id="admin-dashboard">
+          <header class="screen-header">
+            <div class="section-title">
+              <small>Screen 02</small>
+              <h2>Dashboard admin yang tenang, padat, dan mudah dibaca.</h2>
+              <p>
+                Halaman admin dibuat untuk pengambilan keputusan cepat. Semua
+                metrik utama langsung terlihat, sementara aksi yang paling
+                sering dipakai ditempatkan dekat area atas.
+              </p>
+            </div>
+            <div class="screen-copy">
+              <h4>Fokus</h4>
+              <p>
+                Ringkasan kondisi toko, stok menipis, shortcut ke data sayuran,
+                user, dan laporan penjualan.
+              </p>
+            </div>
+          </header>
+          <div class="screen-body">
+            <div class="admin-layout">
+              <aside class="sidebar">
+                <div class="eyebrow">Role • Admin</div>
+                <h3>VeggiePOS</h3>
+                <p>Panel kontrol toko sayur harian.</p>
+                <div class="nav-list">
+                  <div class="nav-item active"><span>Dashboard</span><span>01</span></div>
+                  <div class="nav-item"><span>Data Sayuran</span><span>14</span></div>
+                  <div class="nav-item"><span>Data User</span><span>06</span></div>
+                  <div class="nav-item"><span>Laporan Penjualan</span><span>24</span></div>
+                  <div class="nav-item"><span>Laporan Stok</span><span>08</span></div>
+                  <div class="nav-item"><span>Logout</span><span>-></span></div>
+                </div>
+                <div class="card">
+                  <h4>Stok Kritis</h4>
+                  <p class="muted">3 produk perlu restock sebelum siang.</p>
+                </div>
+              </aside>
+
+              <div class="content-stack">
+                <div class="context-bar">
+                  <div class="crumbs">
+                    <div class="crumb">Admin</div>
+                    <div class="crumb muted-crumb">Dashboard</div>
+                    <div class="crumb muted-crumb">Hari Ini</div>
+                  </div>
+                  <div class="toolbar-cluster">
+                    <div class="segment active">Sinkron 2 Menit Lalu</div>
+                    <div class="segment">Shift Pagi</div>
+                  </div>
+                </div>
+                <div class="topbar">
+                  <div class="search-shell">Cari produk, user, atau transaksi...</div>
+                  <div class="mini-panel">03 April 2026</div>
+                  <div class="mini-panel">Admin Utama</div>
+                </div>
+
+                <div class="grid-4">
+                  <div class="stat">
+                    <div class="metric">
+                      <div>
+                        <div class="muted">Total Produk</div>
+                        <strong>128</strong>
+                      </div>
+                      <div class="pill pill-good">aktif</div>
+                    </div>
+                    <div class="sparkline"></div>
+                  </div>
+                  <div class="stat">
+                    <div class="metric">
+                      <div>
+                        <div class="muted">Stok Menipis</div>
+                        <strong>12</strong>
+                      </div>
+                      <div class="pill pill-warn">warning</div>
+                    </div>
+                    <div class="sparkline"></div>
+                  </div>
+                  <div class="stat">
+                    <div class="metric">
+                      <div>
+                        <div class="muted">User Aktif</div>
+                        <strong>7</strong>
+                      </div>
+                      <div class="pill pill-soft">tim</div>
+                    </div>
+                    <div class="sparkline"></div>
+                  </div>
+                  <div class="stat">
+                    <div class="metric">
+                      <div>
+                        <div class="muted">Penjualan Hari Ini</div>
+                        <strong>Rp2.4jt</strong>
+                      </div>
+                      <div class="pill pill-good">naik 8%</div>
+                    </div>
+                    <div class="sparkline"></div>
+                  </div>
+                </div>
+
+                <div class="split-2">
+                  <section class="table-card">
+                    <h4>Produk yang Perlu Perhatian</h4>
+                    <div class="table-note">Daftar ini membantu admin memprioritaskan restock.</div>
+                    <div class="table-toolbar">
+                      <div class="segmented">
+                        <div class="segment active">Semua</div>
+                        <div class="segment">Kritis</div>
+                        <div class="segment">Aman</div>
+                      </div>
+                      <div class="segment">Update 10:12</div>
+                    </div>
+                    <div class="table-head">
+                      <div>Produk</div>
+                      <div>Harga</div>
+                      <div>Stok</div>
+                      <div>Status</div>
+                    </div>
+                    <div class="table-row">
+                      <div>Bayam Hijau</div>
+                      <div>Rp6.000</div>
+                      <div>4 ikat</div>
+                      <div><span class="pill pill-warn">restock</span></div>
+                    </div>
+                    <div class="table-row">
+                      <div>Tomat Merah</div>
+                      <div>Rp9.500</div>
+                      <div>7 kg</div>
+                      <div><span class="pill pill-warn">rendah</span></div>
+                    </div>
+                    <div class="table-row">
+                      <div>Wortel Brastagi</div>
+                      <div>Rp14.000</div>
+                      <div>16 kg</div>
+                      <div><span class="pill pill-good">aman</span></div>
+                    </div>
+                  </section>
+
+                  <section class="module">
+                    <h4>Aksi Cepat</h4>
+                    <div class="module-toolbar">
+                      <div class="table-note">Shortcut paling sering dipakai admin.</div>
+                      <div class="segment">3 Prioritas Hari Ini</div>
+                    </div>
+                    <div class="grid-3" style="margin-top: 16px;">
+                      <div class="card">
+                        <div class="pill pill-soft">Produk</div>
+                        <h4 style="margin-top: 12px;">Tambah Sayuran</h4>
+                        <p class="muted">Masuk cepat ke form input produk baru.</p>
+                      </div>
+                      <div class="card">
+                        <div class="pill pill-soft">User</div>
+                        <h4 style="margin-top: 12px;">Tambah Kasir</h4>
+                        <p class="muted">Tambahkan akun kasir baru untuk shift berikutnya.</p>
+                      </div>
+                      <div class="card">
+                        <div class="pill pill-soft">Laporan</div>
+                        <h4 style="margin-top: 12px;">Lihat Penjualan</h4>
+                        <p class="muted">Masuk ke laporan harian dan ringkasan omzet.</p>
+                      </div>
+                    </div>
+                    <div class="note-box">
+                      Pola layar ini akan bagus dipakai sebagai acuan dashboard
+                      final karena sudah punya hirarki keputusan: lihat angka,
+                      tangkap masalah, lalu eksekusi aksi.
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="screen" id="admin-produk">
+          <header class="screen-header">
+            <div class="section-title">
+              <small>Screen 03</small>
+              <h2>Halaman data sayuran yang fokus pada CRUD dan visibilitas stok.</h2>
+              <p>
+                Wireframe ini menonjolkan daftar produk yang mudah dipindai,
+                tombol aksi yang jelas, dan ruang yang cukup untuk validasi form
+                saat tambah atau edit data.
+              </p>
+            </div>
+            <div class="screen-copy">
+              <h4>Fokus</h4>
+              <p>
+                Admin dapat mencari produk, melihat harga dan stok, lalu
+                melakukan tambah, edit, atau hapus tanpa tersesat di halaman.
+              </p>
+            </div>
+          </header>
+          <div class="screen-body">
+            <div class="admin-layout">
+              <aside class="sidebar">
+                <div class="eyebrow">Role • Admin</div>
+                <h3>VeggiePOS</h3>
+                <p>Inventaris produk sayur dan harga harian.</p>
+                <div class="nav-list">
+                  <div class="nav-item"><span>Dashboard</span><span>01</span></div>
+                  <div class="nav-item active"><span>Data Sayuran</span><span>14</span></div>
+                  <div class="nav-item"><span>Data User</span><span>06</span></div>
+                  <div class="nav-item"><span>Laporan Penjualan</span><span>24</span></div>
+                  <div class="nav-item"><span>Laporan Stok</span><span>08</span></div>
+                </div>
+                <div class="card">
+                  <h4>Panduan</h4>
+                  <p class="muted">Gunakan badge stok untuk membedakan produk aman dan kritis.</p>
+                </div>
+              </aside>
+
+              <div class="content-stack">
+                <div class="context-bar">
+                  <div class="crumbs">
+                    <div class="crumb">Admin</div>
+                    <div class="crumb muted-crumb">Produk</div>
+                    <div class="crumb muted-crumb">Inventaris Aktif</div>
+                  </div>
+                  <div class="toolbar-cluster">
+                    <div class="segment active">14 Kategori</div>
+                    <div class="segment">2 Produk Butuh Restock</div>
+                  </div>
+                </div>
+                <div class="topbar">
+                  <div class="search-shell">Cari nama sayur atau filter stok...</div>
+                  <div class="button">+ Tambah Produk</div>
+                  <div class="mini-panel">14 kategori tampil</div>
+                </div>
+
+                <div class="grid-3">
+                  <div class="stat">
+                    <div class="metric">
+                      <div>
+                        <div class="muted">Produk Tampil</div>
+                        <strong>128</strong>
+                      </div>
+                      <div class="pill pill-soft">daftar</div>
+                    </div>
+                    <div class="sparkline"></div>
+                  </div>
+                  <div class="stat">
+                    <div class="metric">
+                      <div>
+                        <div class="muted">Harga Diubah Hari Ini</div>
+                        <strong>6</strong>
+                      </div>
+                      <div class="pill pill-good">update</div>
+                    </div>
+                    <div class="sparkline"></div>
+                  </div>
+                  <div class="stat">
+                    <div class="metric">
+                      <div>
+                        <div class="muted">Stok Rendah</div>
+                        <strong>12</strong>
+                      </div>
+                      <div class="pill pill-warn">cek</div>
+                    </div>
+                    <div class="sparkline"></div>
+                  </div>
+                </div>
+
+                <div class="split-2">
+                  <section class="table-card">
+                    <h4>Daftar Sayuran</h4>
+                    <div class="table-toolbar">
+                      <div class="segmented">
+                        <div class="segment active">Semua</div>
+                        <div class="segment">Daun</div>
+                        <div class="segment">Bumbu</div>
+                        <div class="segment">Buah Sayur</div>
+                      </div>
+                      <div class="segment">Sort Harga</div>
+                    </div>
+                    <div class="table-head">
+                      <div>Produk</div>
+                      <div>Harga</div>
+                      <div>Stok</div>
+                      <div>Aksi</div>
+                    </div>
+                    <div class="table-row">
+                      <div>Sawi Hijau</div>
+                      <div>Rp5.000</div>
+                      <div>22 ikat</div>
+                      <div><span class="pill pill-soft">Edit • Hapus</span></div>
+                    </div>
+                    <div class="table-row">
+                      <div>Kangkung</div>
+                      <div>Rp4.500</div>
+                      <div>6 ikat</div>
+                      <div><span class="pill pill-warn">Edit • Hapus</span></div>
+                    </div>
+                    <div class="table-row">
+                      <div>Cabai Rawit</div>
+                      <div>Rp32.000</div>
+                      <div>11 kg</div>
+                      <div><span class="pill pill-soft">Edit • Hapus</span></div>
+                    </div>
+                    <div class="table-row">
+                      <div>Timun</div>
+                      <div>Rp8.000</div>
+                      <div>18 kg</div>
+                      <div><span class="pill pill-soft">Edit • Hapus</span></div>
+                    </div>
+                  </section>
+
+                  <section class="module">
+                    <h4>Form Tambah Sayuran</h4>
+                    <div class="module-toolbar">
+                      <div class="table-note">Form dibuat ringkas agar admin cepat input produk baru.</div>
+                      <div class="segment active">Tambah Mode</div>
+                    </div>
+                    <div class="fields">
+                      <div class="field">
+                        <label>Nama Sayur</label>
+                        <div class="line"></div>
+                      </div>
+                      <div class="field">
+                        <label>Harga</label>
+                        <div class="line"></div>
+                      </div>
+                      <div class="field">
+                        <label>Stok</label>
+                        <div class="line"></div>
+                      </div>
+                    </div>
+                    <div class="button-row">
+                      <div class="button">Simpan Data</div>
+                      <div class="button-soft">Reset Form</div>
+                    </div>
+                    <div class="note-box">
+                      Area ini disiapkan untuk validasi input kosong dan pesan
+                      sukses setelah produk berhasil disimpan.
+                    </div>
+                    <div class="progress-stack">
+                      <div class="progress-item">
+                        <div class="progress-meta">
+                          <strong>Kelengkapan Form</strong>
+                          <span>75%</span>
+                        </div>
+                        <div class="progress-track">
+                          <div class="progress-fill" style="width: 75%;"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="screen" id="kasir-transaksi">
+          <header class="screen-header">
+            <div class="section-title">
+              <small>Screen 04</small>
+              <h2>Transaksi kasir yang dibuat seperti meja kerja dua sisi.</h2>
+              <p>
+                Sebelah kiri fokus ke pemilihan sayur, harga, dan stok. Sebelah
+                kanan fokus ke keranjang, pembayaran, dan cetak struk. Tujuannya
+                agar kasir bergerak cepat tanpa kehilangan konteks.
+              </p>
+            </div>
+            <div class="screen-copy">
+              <h4>Fokus</h4>
+              <p>
+                Cari produk, input qty, tambah ke keranjang, validasi pembayaran,
+                lalu simpan transaksi dan cetak struk.
+              </p>
+            </div>
+          </header>
+          <div class="screen-body">
+            <div class="cashier-layout">
+              <aside class="sidebar">
+                <div class="eyebrow">Role • Kasir</div>
+                <h3>VeggiePOS</h3>
+                <p>Shift pagi • transaksi cepat dan jelas.</p>
+                <div class="nav-list">
+                  <div class="nav-item"><span>Dashboard</span><span>01</span></div>
+                  <div class="nav-item active"><span>Transaksi Kasir</span><span>24</span></div>
+                  <div class="nav-item"><span>Riwayat</span><span>08</span></div>
+                  <div class="nav-item"><span>Profil</span><span>Kasir 2</span></div>
+                  <div class="nav-item"><span>Logout</span><span>-></span></div>
+                </div>
+                <div class="card">
+                  <h4>Tips Shift</h4>
+                  <p class="muted">Selalu cek badge stok sebelum menambahkan qty besar.</p>
+                </div>
+              </aside>
+
+              <div class="content-stack">
+                <div class="context-bar">
+                  <div class="crumbs">
+                    <div class="crumb">Kasir</div>
+                    <div class="crumb muted-crumb">Transaksi</div>
+                    <div class="crumb muted-crumb">Shift Pagi</div>
+                  </div>
+                  <div class="toolbar-cluster">
+                    <div class="segment active">Keranjang Aktif</div>
+                    <div class="segment">Nota #TRX-2403</div>
+                  </div>
+                </div>
+                <div class="topbar">
+                  <div class="search-shell">Cari barang / lihat harga sayur...</div>
+                  <div class="mini-panel">Kasir • Nanda</div>
+                  <div class="mini-panel">No. Transaksi #TRX-2403</div>
+                </div>
+
+                <div class="split-cashier">
+                  <section class="module">
+                    <h4>Daftar Produk</h4>
+                    <div class="module-toolbar">
+                      <div class="table-note">Pilih kategori atau ketik nama produk untuk mempercepat transaksi.</div>
+                      <div class="segment active">Pencarian Cepat</div>
+                    </div>
+                    <div class="chip-row" style="margin: 14px 0 18px;">
+                      <div class="chip">Semua</div>
+                      <div class="chip">Daun</div>
+                      <div class="chip">Buah Sayur</div>
+                      <div class="chip">Bumbu</div>
+                    </div>
+
+                    <div class="grid-products">
+                      <div class="product-card">
+                        <div class="shape"></div>
+                        <div>
+                          <strong>Bayam</strong>
+                          <div class="muted">Rp6.000 / ikat</div>
+                        </div>
+                        <div class="product-foot">
+                          <span class="pill pill-good">stok 18</span>
+                          <span class="button-soft">+ Keranjang</span>
+                        </div>
+                      </div>
+                      <div class="product-card">
+                        <div class="shape"></div>
+                        <div>
+                          <strong>Tomat</strong>
+                          <div class="muted">Rp9.500 / kg</div>
+                        </div>
+                        <div class="product-foot">
+                          <span class="pill pill-warn">stok 7</span>
+                          <span class="button-soft">+ Keranjang</span>
+                        </div>
+                      </div>
+                      <div class="product-card">
+                        <div class="shape"></div>
+                        <div>
+                          <strong>Wortel</strong>
+                          <div class="muted">Rp14.000 / kg</div>
+                        </div>
+                        <div class="product-foot">
+                          <span class="pill pill-good">stok 16</span>
+                          <span class="button-soft">+ Keranjang</span>
+                        </div>
+                      </div>
+                      <div class="product-card">
+                        <div class="shape"></div>
+                        <div>
+                          <strong>Kangkung</strong>
+                          <div class="muted">Rp4.500 / ikat</div>
+                        </div>
+                        <div class="product-foot">
+                          <span class="pill pill-warn">stok 6</span>
+                          <span class="button-soft">+ Keranjang</span>
+                        </div>
+                      </div>
+                      <div class="product-card">
+                        <div class="shape"></div>
+                        <div>
+                          <strong>Cabai Rawit</strong>
+                          <div class="muted">Rp32.000 / kg</div>
+                        </div>
+                        <div class="product-foot">
+                          <span class="pill pill-good">stok 11</span>
+                          <span class="button-soft">+ Keranjang</span>
+                        </div>
+                      </div>
+                      <div class="product-card">
+                        <div class="shape"></div>
+                        <div>
+                          <strong>Timun</strong>
+                          <div class="muted">Rp8.000 / kg</div>
+                        </div>
+                        <div class="product-foot">
+                          <span class="pill pill-good">stok 18</span>
+                          <span class="button-soft">+ Keranjang</span>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="content-stack">
+                    <div class="cart-card">
+                      <h4>Keranjang Aktif</h4>
+                      <div class="receipt-badge">3 item • siap checkout</div>
+                      <div class="cart-list" style="margin-top: 16px;">
+                        <div class="cart-item">
+                          <div>
+                            <strong>Bayam</strong>
+                            <div class="muted">2 x Rp6.000</div>
+                          </div>
+                          <strong>Rp12.000</strong>
+                        </div>
+                        <div class="cart-item">
+                          <div>
+                            <strong>Tomat</strong>
+                            <div class="muted">1 x Rp9.500</div>
+                          </div>
+                          <strong>Rp9.500</strong>
+                        </div>
+                        <div class="cart-item">
+                          <div>
+                            <strong>Timun</strong>
+                            <div class="muted">2 x Rp8.000</div>
+                          </div>
+                          <strong>Rp16.000</strong>
+                        </div>
+                      </div>
+
+                      <div class="receipt-total">
+                        <div class="payment-row">
+                          <span>Total Belanja</span>
+                          <strong>Rp37.500</strong>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="module">
+                      <h4>Pembayaran</h4>
+                      <div class="module-toolbar">
+                        <div class="table-note">Validasi kembalian akan muncul otomatis setelah input uang bayar.</div>
+                        <div class="segment">Tunai</div>
+                      </div>
+                      <div class="fields">
+                        <div class="field">
+                          <label>Uang Bayar</label>
+                          <div class="line"></div>
+                        </div>
+                        <div class="field">
+                          <label>Kembalian</label>
+                          <div class="line"></div>
+                        </div>
+                      </div>
+                      <div class="button-row">
+                        <div class="button">Simpan Transaksi</div>
+                        <div class="button-soft">Cetak Struk</div>
+                        <div class="button-alert">Reset</div>
+                      </div>
+                      <div class="note-box">
+                        Area ini bisa dipakai nanti untuk peringatan jika uang
+                        bayar kurang dari total transaksi.
+                      </div>
+                    </div>
+
+                    <div class="receipt-card">
+                      <h4>Preview Struk</h4>
+                      <div class="module-toolbar">
+                        <div class="table-note">Ringkasan terakhir sebelum dicetak.</div>
+                        <div class="segment active">Auto Preview</div>
+                      </div>
+                      <div class="receipt-ticket">
+                        <h5>VeggiePOS</h5>
+                        <div class="receipt-badge">Kasir Nanda • 07:18 WIB</div>
+                        <div class="receipt-lines">
+                          <div class="receipt-line">
+                            <span>Bayam x2</span>
+                            <strong>12.000</strong>
+                          </div>
+                          <div class="receipt-line">
+                            <span>Tomat x1</span>
+                            <strong>9.500</strong>
+                          </div>
+                          <div class="receipt-line">
+                            <span>Timun x2</span>
+                            <strong>16.000</strong>
+                          </div>
+                        </div>
+                        <div class="receipt-total">
+                          <div class="payment-row">
+                            <span>Total</span>
+                            <strong>37.500</strong>
+                          </div>
+                          <div class="payment-row">
+                            <span>Bayar</span>
+                            <strong>50.000</strong>
+                          </div>
+                          <div class="payment-row">
+                            <span>Kembalian</span>
+                            <strong>12.500</strong>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="screen" id="admin-users">
+          <header class="screen-header">
+            <div class="section-title">
+              <small>Screen 05</small>
+              <h2>Data user yang terasa seperti panel kontrol tim, bukan tabel dingin.</h2>
+              <p>
+                Halaman ini dirancang agar admin mudah membaca komposisi akun,
+                menambah kasir baru, dan mengelola akses tanpa kehilangan rasa
+                visual yang konsisten dengan area admin lainnya.
+              </p>
+            </div>
+            <div class="screen-copy">
+              <h4>Fokus</h4>
+              <p>
+                Daftar user, level akses, status akun, dan form tambah user
+                ditempatkan berdampingan agar alur admin lebih efisien.
+              </p>
+            </div>
+          </header>
+          <div class="screen-body">
+            <div class="admin-layout">
+              <aside class="sidebar">
+                <div class="eyebrow">Role • Admin</div>
+                <h3>VeggiePOS</h3>
+                <p>Panel pengelolaan akun admin dan kasir.</p>
+                <div class="nav-list">
+                  <div class="nav-item"><span>Dashboard</span><span>01</span></div>
+                  <div class="nav-item"><span>Data Sayuran</span><span>14</span></div>
+                  <div class="nav-item active"><span>Data User</span><span>06</span></div>
+                  <div class="nav-item"><span>Laporan Penjualan</span><span>24</span></div>
+                  <div class="nav-item"><span>Laporan Stok</span><span>08</span></div>
+                </div>
+                <div class="card">
+                  <h4>Ringkasan Akses</h4>
+                  <p class="muted">2 admin utama dan 4 akun kasir aktif untuk operasional harian.</p>
+                </div>
+              </aside>
+
+              <div class="content-stack">
+                <div class="context-bar">
+                  <div class="crumbs">
+                    <div class="crumb">Admin</div>
+                    <div class="crumb muted-crumb">Data User</div>
+                    <div class="crumb muted-crumb">Hak Akses</div>
+                  </div>
+                  <div class="toolbar-cluster">
+                    <div class="segment active">6 Akun</div>
+                    <div class="segment">1 Butuh Tindak Lanjut</div>
+                  </div>
+                </div>
+                <div class="topbar">
+                  <div class="search-shell">Cari username, nama lengkap, atau filter level...</div>
+                  <div class="button">+ Tambah User</div>
+                  <div class="mini-panel">6 akun terdaftar</div>
+                </div>
+
+                <div class="grid-3">
+                  <div class="stat">
+                    <div class="metric">
+                      <div>
+                        <div class="muted">Total User</div>
+                        <strong>6</strong>
+                      </div>
+                      <div class="pill pill-soft">akun</div>
+                    </div>
+                    <div class="sparkline"></div>
+                  </div>
+                  <div class="stat">
+                    <div class="metric">
+                      <div>
+                        <div class="muted">Admin</div>
+                        <strong>2</strong>
+                      </div>
+                      <div class="pill pill-good">inti</div>
+                    </div>
+                    <div class="sparkline"></div>
+                  </div>
+                  <div class="stat">
+                    <div class="metric">
+                      <div>
+                        <div class="muted">Kasir Aktif</div>
+                        <strong>4</strong>
+                      </div>
+                      <div class="pill pill-good">shift</div>
+                    </div>
+                    <div class="sparkline"></div>
+                  </div>
+                </div>
+
+                <div class="split-2">
+                  <section class="table-card">
+                    <h4>Daftar Pengguna</h4>
+                    <div class="table-toolbar">
+                      <div class="segmented">
+                        <div class="segment active">Semua</div>
+                        <div class="segment">Admin</div>
+                        <div class="segment">Kasir</div>
+                      </div>
+                      <div class="segment">Status Akun</div>
+                    </div>
+                    <div class="table-head">
+                      <div>User</div>
+                      <div>Level</div>
+                      <div>Status</div>
+                      <div>Aksi</div>
+                    </div>
+                    <div class="table-row">
+                      <div>admin.utama</div>
+                      <div>Admin</div>
+                      <div><span class="pill pill-good">aktif</span></div>
+                      <div><span class="pill pill-soft">Edit • Reset</span></div>
+                    </div>
+                    <div class="table-row">
+                      <div>kasir.pagi</div>
+                      <div>Kasir</div>
+                      <div><span class="pill pill-good">aktif</span></div>
+                      <div><span class="pill pill-soft">Edit • Hapus</span></div>
+                    </div>
+                    <div class="table-row">
+                      <div>kasir.siang</div>
+                      <div>Kasir</div>
+                      <div><span class="pill pill-good">aktif</span></div>
+                      <div><span class="pill pill-soft">Edit • Hapus</span></div>
+                    </div>
+                    <div class="table-row">
+                      <div>kasir.cadangan</div>
+                      <div>Kasir</div>
+                      <div><span class="pill pill-warn">nonaktif</span></div>
+                      <div><span class="pill pill-soft">Aktifkan</span></div>
+                    </div>
+                    <div class="people-list">
+                      <div class="people-item">
+                        <div class="identity">
+                          <div class="avatar">AU</div>
+                          <div>
+                            <strong>Admin Utama</strong>
+                            <div class="muted">Mengelola produk dan laporan harian</div>
+                          </div>
+                        </div>
+                        <span class="pill pill-good">admin</span>
+                      </div>
+                      <div class="people-item">
+                        <div class="identity">
+                          <div class="avatar">NP</div>
+                          <div>
+                            <strong>Nanda Pagi</strong>
+                            <div class="muted">Kasir aktif shift pagi dengan transaksi stabil</div>
+                          </div>
+                        </div>
+                        <span class="pill pill-soft">kasir</span>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="module">
+                    <h4>Form Tambah User</h4>
+                    <div class="module-toolbar">
+                      <div class="table-note">Arahkan form ini untuk onboarding kasir baru dengan cepat.</div>
+                      <div class="segment active">Onboarding</div>
+                    </div>
+                    <div class="fields">
+                      <div class="field">
+                        <label>Username</label>
+                        <div class="line"></div>
+                      </div>
+                      <div class="field">
+                        <label>Password</label>
+                        <div class="line"></div>
+                      </div>
+                      <div class="field">
+                        <label>Nama Lengkap</label>
+                        <div class="line"></div>
+                      </div>
+                      <div class="field">
+                        <label>Level User</label>
+                        <div class="line"></div>
+                      </div>
+                    </div>
+                    <div class="button-row">
+                      <div class="button">Simpan User</div>
+                      <div class="button-soft">Reset Form</div>
+                    </div>
+                    <div class="note-box">
+                      Placeholder ini disiapkan untuk validasi username ganda,
+                      field kosong, dan konfirmasi saat user berhasil dibuat.
+                    </div>
+                    <div class="note-list">
+                      <div class="note-item">
+                        <span>Password Default</span>
+                        <strong>dibuat otomatis</strong>
+                      </div>
+                      <div class="note-item">
+                        <span>Status Akses</span>
+                        <strong>aktif setelah simpan</strong>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="screen" id="laporan-penjualan">
+          <header class="screen-header">
+            <div class="section-title">
+              <small>Screen 06</small>
+              <h2>Laporan penjualan yang menonjolkan ritme transaksi dan omzet harian.</h2>
+              <p>
+                Halaman laporan dirancang bukan hanya sebagai tabel, tetapi
+                sebagai ruang baca cepat untuk melihat performa toko, kasir
+                aktif, serta detail transaksi yang paling relevan.
+              </p>
+            </div>
+            <div class="screen-copy">
+              <h4>Fokus</h4>
+              <p>
+                Filter tanggal, ringkasan omzet, jumlah transaksi, kasir
+                teraktif, dan tabel transaksi yang mudah dipindai.
+              </p>
+            </div>
+          </header>
+          <div class="screen-body">
+            <div class="admin-layout">
+              <aside class="sidebar">
+                <div class="eyebrow">Role • Admin</div>
+                <h3>VeggiePOS</h3>
+                <p>Ringkasan performa penjualan harian dan periodik.</p>
+                <div class="nav-list">
+                  <div class="nav-item"><span>Dashboard</span><span>01</span></div>
+                  <div class="nav-item"><span>Data Sayuran</span><span>14</span></div>
+                  <div class="nav-item"><span>Data User</span><span>06</span></div>
+                  <div class="nav-item active"><span>Laporan Penjualan</span><span>24</span></div>
+                  <div class="nav-item"><span>Laporan Stok</span><span>08</span></div>
+                </div>
+                <div class="card">
+                  <h4>Insight Hari Ini</h4>
+                  <p class="muted">Transaksi ramai terjadi antara pukul 07.00 sampai 10.30 pagi.</p>
+                </div>
+              </aside>
+
+              <div class="content-stack">
+                <div class="context-bar">
+                  <div class="crumbs">
+                    <div class="crumb">Admin</div>
+                    <div class="crumb muted-crumb">Laporan</div>
+                    <div class="crumb muted-crumb">Penjualan</div>
+                  </div>
+                  <div class="toolbar-cluster">
+                    <div class="segment active">Harian</div>
+                    <div class="segment">03 Apr 2026</div>
+                  </div>
+                </div>
+                <div class="topbar">
+                  <div class="search-shell">Filter tanggal, kasir, atau nomor transaksi...</div>
+                  <div class="button-soft">03 Apr 2026 - 03 Apr 2026</div>
+                  <div class="button">Cetak Laporan</div>
+                </div>
+
+                <div class="grid-4">
+                  <div class="stat">
+                    <div class="metric">
+                      <div>
+                        <div class="muted">Total Omzet</div>
+                        <strong>Rp2.4jt</strong>
+                      </div>
+                      <div class="pill pill-good">hari ini</div>
+                    </div>
+                    <div class="sparkline"></div>
+                  </div>
+                  <div class="stat">
+                    <div class="metric">
+                      <div>
+                        <div class="muted">Jumlah Transaksi</div>
+                        <strong>48</strong>
+                      </div>
+                      <div class="pill pill-soft">nota</div>
+                    </div>
+                    <div class="sparkline"></div>
+                  </div>
+                  <div class="stat">
+                    <div class="metric">
+                      <div>
+                        <div class="muted">Rata-rata Belanja</div>
+                        <strong>Rp50rb</strong>
+                      </div>
+                      <div class="pill pill-good">stabil</div>
+                    </div>
+                    <div class="sparkline"></div>
+                  </div>
+                  <div class="stat">
+                    <div class="metric">
+                      <div>
+                        <div class="muted">Kasir Teraktif</div>
+                        <strong>Nanda</strong>
+                      </div>
+                      <div class="pill pill-soft">18 trx</div>
+                    </div>
+                    <div class="sparkline"></div>
+                  </div>
+                </div>
+
+                <div class="split-2">
+                  <section class="table-card">
+                    <h4>Riwayat Transaksi</h4>
+                    <div class="table-toolbar">
+                      <div class="segmented">
+                        <div class="segment active">Semua Kasir</div>
+                        <div class="segment">Tunai</div>
+                        <div class="segment">Pagi</div>
+                      </div>
+                      <div class="segment">48 Transaksi</div>
+                    </div>
+                    <div
+                      class="table-head"
+                      style="grid-template-columns: 0.95fr 0.8fr 0.9fr 0.8fr 0.85fr;"
+                    >
+                      <div>No. Transaksi</div>
+                      <div>Kasir</div>
+                      <div>Waktu</div>
+                      <div>Total</div>
+                      <div>Detail</div>
+                    </div>
+                    <div
+                      class="table-row"
+                      style="grid-template-columns: 0.95fr 0.8fr 0.9fr 0.8fr 0.85fr;"
+                    >
+                      <div>#TRX-2403</div>
+                      <div>Nanda</div>
+                      <div>07:18</div>
+                      <div>Rp37.500</div>
+                      <div><span class="pill pill-soft">Lihat</span></div>
+                    </div>
+                    <div
+                      class="table-row"
+                      style="grid-template-columns: 0.95fr 0.8fr 0.9fr 0.8fr 0.85fr;"
+                    >
+                      <div>#TRX-2404</div>
+                      <div>Dina</div>
+                      <div>07:34</div>
+                      <div>Rp62.000</div>
+                      <div><span class="pill pill-soft">Lihat</span></div>
+                    </div>
+                    <div
+                      class="table-row"
+                      style="grid-template-columns: 0.95fr 0.8fr 0.9fr 0.8fr 0.85fr;"
+                    >
+                      <div>#TRX-2405</div>
+                      <div>Nanda</div>
+                      <div>08:06</div>
+                      <div>Rp44.500</div>
+                      <div><span class="pill pill-soft">Lihat</span></div>
+                    </div>
+                    <div
+                      class="table-row"
+                      style="grid-template-columns: 0.95fr 0.8fr 0.9fr 0.8fr 0.85fr;"
+                    >
+                      <div>#TRX-2406</div>
+                      <div>Rian</div>
+                      <div>08:42</div>
+                      <div>Rp55.000</div>
+                      <div><span class="pill pill-soft">Lihat</span></div>
+                    </div>
+                  </section>
+
+                  <section class="module">
+                    <h4>Ringkasan Cepat</h4>
+                    <div class="module-toolbar">
+                      <div class="table-note">Insight ini nantinya dapat diganti chart sungguhan.</div>
+                      <div class="segment active">Insight Harian</div>
+                    </div>
+                    <div class="grid-3" style="margin-top: 16px;">
+                      <div class="card">
+                        <div class="pill pill-soft">Produk Terjual</div>
+                        <h4 style="margin-top: 12px;">Tomat Merah</h4>
+                        <p class="muted">Paling sering muncul pada transaksi pagi hari.</p>
+                      </div>
+                      <div class="card">
+                        <div class="pill pill-soft">Jam Ramai</div>
+                        <h4 style="margin-top: 12px;">07:00 - 10:30</h4>
+                        <p class="muted">Waktu ini cocok untuk memaksimalkan kasir aktif.</p>
+                      </div>
+                      <div class="card">
+                        <div class="pill pill-soft">Kasir</div>
+                        <h4 style="margin-top: 12px;">Nanda</h4>
+                        <p class="muted">Transaksi terbanyak hari ini dengan nota stabil.</p>
+                      </div>
+                    </div>
+                    <div class="progress-stack">
+                      <div class="progress-item">
+                        <div class="progress-meta">
+                          <strong>Target Omzet Harian</strong>
+                          <span>80%</span>
+                        </div>
+                        <div class="progress-track">
+                          <div class="progress-fill" style="width: 80%;"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="screen" id="laporan-stok">
+          <header class="screen-header">
+            <div class="section-title">
+              <small>Screen 07</small>
+              <h2>Laporan stok yang memudahkan admin melihat mana yang aman dan mana yang harus dikejar.</h2>
+              <p>
+                Layar ini dirancang untuk memprioritaskan keputusan restock.
+                Produk yang kritis diberi penekanan visual, sementara ringkasan
+                kategori membantu admin membaca kondisi inventaris secara cepat.
+              </p>
+            </div>
+            <div class="screen-copy">
+              <h4>Fokus</h4>
+              <p>
+                Status stok, indikator restock, filter produk, dan kartu
+                insight agar admin bisa menindaklanjuti tanpa harus membaca data
+                mentah terlalu lama.
+              </p>
+            </div>
+          </header>
+          <div class="screen-body">
+            <div class="admin-layout">
+              <aside class="sidebar">
+                <div class="eyebrow">Role • Admin</div>
+                <h3>VeggiePOS</h3>
+                <p>Kontrol stok sayuran untuk operasional yang lebih siap.</p>
+                <div class="nav-list">
+                  <div class="nav-item"><span>Dashboard</span><span>01</span></div>
+                  <div class="nav-item"><span>Data Sayuran</span><span>14</span></div>
+                  <div class="nav-item"><span>Data User</span><span>06</span></div>
+                  <div class="nav-item"><span>Laporan Penjualan</span><span>24</span></div>
+                  <div class="nav-item active"><span>Laporan Stok</span><span>08</span></div>
+                </div>
+                <div class="card">
+                  <h4>Catatan Restock</h4>
+                  <p class="muted">Fokus hari ini: kangkung, bayam, dan tomat karena pergerakannya cepat.</p>
+                </div>
+              </aside>
+
+              <div class="content-stack">
+                <div class="context-bar">
+                  <div class="crumbs">
+                    <div class="crumb">Admin</div>
+                    <div class="crumb muted-crumb">Laporan</div>
+                    <div class="crumb muted-crumb">Stok</div>
+                  </div>
+                  <div class="toolbar-cluster">
+                    <div class="segment active">Inventaris Aktif</div>
+                    <div class="segment">3 Restock Mendesak</div>
+                  </div>
+                </div>
+                <div class="topbar">
+                  <div class="search-shell">Cari produk, kategori, atau status stok...</div>
+                  <div class="button-soft">Filter Kategori</div>
+                  <div class="button">Unduh Rekap</div>
+                </div>
+
+                <div class="grid-4">
+                  <div class="stat">
+                    <div class="metric">
+                      <div>
+                        <div class="muted">Produk Aman</div>
+                        <strong>92</strong>
+                      </div>
+                      <div class="pill pill-good">stabil</div>
+                    </div>
+                    <div class="sparkline"></div>
+                  </div>
+                  <div class="stat">
+                    <div class="metric">
+                      <div>
+                        <div class="muted">Stok Rendah</div>
+                        <strong>12</strong>
+                      </div>
+                      <div class="pill pill-warn">pantau</div>
+                    </div>
+                    <div class="sparkline"></div>
+                  </div>
+                  <div class="stat">
+                    <div class="metric">
+                      <div>
+                        <div class="muted">Restock Mendesak</div>
+                        <strong>3</strong>
+                      </div>
+                      <div class="pill pill-warn">prioritas</div>
+                    </div>
+                    <div class="sparkline"></div>
+                  </div>
+                  <div class="stat">
+                    <div class="metric">
+                      <div>
+                        <div class="muted">Kategori Aktif</div>
+                        <strong>14</strong>
+                      </div>
+                      <div class="pill pill-soft">jenis</div>
+                    </div>
+                    <div class="sparkline"></div>
+                  </div>
+                </div>
+
+                <div class="split-2">
+                  <section class="table-card">
+                    <h4>Rekap Kondisi Stok</h4>
+                    <div class="table-toolbar">
+                      <div class="segmented">
+                        <div class="segment active">Semua</div>
+                        <div class="segment">Kritis</div>
+                        <div class="segment">Aman</div>
+                      </div>
+                      <div class="segment">Restock Prioritas</div>
+                    </div>
+                    <div class="table-head">
+                      <div>Produk</div>
+                      <div>Stok</div>
+                      <div>Min. Aman</div>
+                      <div>Status</div>
+                    </div>
+                    <div class="table-row">
+                      <div>Bayam Hijau</div>
+                      <div>4 ikat</div>
+                      <div>12 ikat</div>
+                      <div><span class="pill pill-warn">restock</span></div>
+                    </div>
+                    <div class="table-row">
+                      <div>Kangkung</div>
+                      <div>6 ikat</div>
+                      <div>10 ikat</div>
+                      <div><span class="pill pill-warn">rendah</span></div>
+                    </div>
+                    <div class="table-row">
+                      <div>Tomat Merah</div>
+                      <div>7 kg</div>
+                      <div>14 kg</div>
+                      <div><span class="pill pill-warn">restock</span></div>
+                    </div>
+                    <div class="table-row">
+                      <div>Wortel</div>
+                      <div>16 kg</div>
+                      <div>8 kg</div>
+                      <div><span class="pill pill-good">aman</span></div>
+                    </div>
+                  </section>
+
+                  <section class="module">
+                    <h4>Insight Inventaris</h4>
+                    <div class="module-toolbar">
+                      <div class="table-note">Panel ini cocok nanti diisi rekomendasi restock otomatis.</div>
+                      <div class="segment active">Prioritas</div>
+                    </div>
+                    <div class="grid-3" style="margin-top: 16px;">
+                      <div class="card">
+                        <div class="pill pill-soft">Paling Kritis</div>
+                        <h4 style="margin-top: 12px;">Bayam Hijau</h4>
+                        <p class="muted">Sisa stok hanya 4 ikat dan termasuk produk cepat laku.</p>
+                      </div>
+                      <div class="card">
+                        <div class="pill pill-soft">Aman</div>
+                        <h4 style="margin-top: 12px;">Wortel</h4>
+                        <p class="muted">Stok masih aman untuk dua hari operasional normal.</p>
+                      </div>
+                      <div class="card">
+                        <div class="pill pill-soft">Saran</div>
+                        <h4 style="margin-top: 12px;">Restock Pagi</h4>
+                        <p class="muted">Prioritaskan produk daun sebelum jam transaksi ramai dimulai.</p>
+                      </div>
+                    </div>
+                    <div class="progress-stack">
+                      <div class="progress-item">
+                        <div class="progress-meta">
+                          <strong>Kesiapan Sayur Daun</strong>
+                          <span>42%</span>
+                        </div>
+                        <div class="progress-track">
+                          <div class="progress-fill warn" style="width: 42%;"></div>
+                        </div>
+                      </div>
+                      <div class="progress-item">
+                        <div class="progress-meta">
+                          <strong>Kesiapan Sayur Umbi</strong>
+                          <span>78%</span>
+                        </div>
+                        <div class="progress-track">
+                          <div class="progress-fill" style="width: 78%;"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <p class="footer-note">
+        Wireframe VeggiePOS • dibuat sebagai acuan visual sebelum implementasi
+        website final.
+      </p>
+    </main>
+  </body>
+</html>

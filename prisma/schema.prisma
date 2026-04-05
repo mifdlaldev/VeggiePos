@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  ADMIN
+  KASIR
+}
+
+model User {
+  id           Int           @id @default(autoincrement()) @map("id_user")
+  username     String        @unique
+  password     String
+  fullName     String        @map("nama_lengkap")
+  role         UserRole      @map("level")
+  transactions Transaction[]
+
+  @@map("users")
+}
+
+model Product {
+  id                 Int                 @id @default(autoincrement()) @map("id_produk")
+  name               String              @map("nama_sayur")
+  price              Int
+  stock              Int
+  transactionDetails TransactionDetail[]
+
+  @@map("produk")
+}
+
+model Transaction {
+  id                 Int                 @id @default(autoincrement()) @map("id_transaksi")
+  userId             Int                 @map("id_user")
+  transactionDate    DateTime            @default(now()) @map("tgl_transaksi")
+  totalAmount        Int                 @map("total_bayar")
+  paidAmount         Int                 @map("uang_bayar")
+  changeAmount       Int                 @map("kembalian")
+  user               User                @relation(fields: [userId], references: [id])
+  transactionDetails TransactionDetail[]
+
+  @@index([userId])
+  @@map("transaksi")
+}
+
+model TransactionDetail {
+  id            Int         @id @default(autoincrement()) @map("id_detail")
+  transactionId Int         @map("id_transaksi")
+  productId     Int         @map("id_produk")
+  quantity      Int         @map("qty")
+  subtotal      Int
+  transaction   Transaction @relation(fields: [transactionId], references: [id])
+  product       Product     @relation(fields: [productId], references: [id])
+
+  @@index([transactionId])
+  @@index([productId])
+  @@map("detail_transaksi")
+}

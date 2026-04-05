@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f6efdf;
+  --background-soft: rgba(255, 251, 244, 0.82);
+  --surface: #fffaf2;
+  --surface-strong: #ffffff;
+  --sidebar: #183322;
+  --foreground: #16271c;
+  --muted: #5c6c5f;
+  --line: rgba(22, 39, 28, 0.12);
+  --olive: #617a34;
+  --olive-deep: #3f5d24;
+  --tomato: #d26b38;
+  --sand: #e9d9b3;
+  --mint: #d8e9cb;
+  --danger: #b54842;
+  --shadow-lg: 0 30px 80px rgba(49, 51, 32, 0.12);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(circle at top left, rgba(255, 198, 129, 0.22), transparent 24%),
+    radial-gradient(circle at 80% 10%, rgba(97, 122, 52, 0.18), transparent 20%),
+    linear-gradient(180deg, #f7f1e6 0%, #efe5d2 100%);
+  color: var(--foreground);
+  font-family: var(--font-sans), sans-serif;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.14;
+  background-image:
+    linear-gradient(rgba(22, 39, 28, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(22, 39, 28, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent 90%);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+::selection {
+  background: rgba(210, 107, 56, 0.18);
+}
+
+.grain-overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: radial-gradient(circle at 1px 1px, rgba(22, 39, 28, 0.45) 1px, transparent 0);
+  background-size: 12px 12px;
+}
+
+.scrollbar-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent;
+}
+
+.scrollbar-hidden::-webkit-scrollbar-thumb {
+  background: transparent;
+}
